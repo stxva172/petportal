@@ -1,0 +1,53 @@
+4]Trigger to define constraints before insert or update on seller table.
+
+create trigger t4
+before insert or update
+on seller
+for each row 
+execute procedure f4();
+
+CREATE TRIGGER
+
+create or replace function f4() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.se_no=0 or new.se_no ISNULL or new.p_no=0 or new.p_no ISNULL)then
+            raise exception E''\n Seller details unavailable..!!'';
+        end if; 
+  
+	perform *
+	from seller
+        where se_no=new.se_no
+        and p_no=new.p_no;
+
+        if found then
+	   raise exception E''\n Invalid Data..!'';
+        end if;
+
+        perform *
+        from pet_type
+        where p_no=new.p_no;
+
+	if not found then
+	   raise exception E''\n Invalid pet Reference No..!'';
+        end if;
+
+	perform *
+        from seller
+        where se_no=new.se_no;
+	
+	if not found then
+	   raise exception E''\n Invalid Seller No..!'';
+        end if;
+
+     end if;
+
+     if (TG_OP=''UPDATE'') then
+        raise exception E''\n Update access to Seller denied'';
+     end if;
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+

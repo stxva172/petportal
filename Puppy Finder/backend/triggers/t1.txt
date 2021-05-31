@@ -1,0 +1,70 @@
+Triggers:
+
+1)Trigger to define constrints before insert or update on pet_type table.
+Ans.:
+
+create trigger t1
+before insert or update
+on pet_type
+for each row 
+execute procedure f1();
+
+CREATE TRIGGER
+
+create or replace function f1() returns trigger as'
+begin    
+	if (TG_OP=''INSERT'') then       
+	    if (new.p_no <=0 or new.p_no ISNULL) then          
+		raise exception E''\n Invalid Pet Type No.'';       
+	    end if;           
+
+	    if (new.p_type ISNULL) then          
+	        raise exception E''\n Pet Type should not be null.'';       
+	    end if; 
+
+	end if;      
+
+	if (TG_OP=''UPDATE'') then       
+	    if (new.p_no <> old.p_no or new.p_no ISNULL) then          
+		raise exception E''\n Updation of Pet no Denied.'';       
+	    end if;       
+
+	    if (new.p_type ISNULL) then           
+	    	raise exception E''\n Updation of Pet Type Denied.'';       
+	    end if;   
+
+	end if;
+return new;
+end;
+'language'plpgsql';
+----------------------------------------------------------------------------------
+For Insertion:
+==============
+postgres=# insert into pet_type values(3);
+ERROR:
+ Pet Type should not be null.
+CONTEXT:  PL/pgSQL function f1() line 9 at RAISE
+----------------------------------------------------------------------------------
+postgres=# insert into pet_type values(1,'dogs','affenpincscher');
+INSERT 0 1
+
+postgres=# select * from pet_type;
+
+ p_no | p_type |    p_breed
+------+--------+----------------
+    1 | dogs   | affenpincscher
+(1 row)
+----------------------------------------------------------------------------------
+For Updation:
+=============
+postgres=# update pet_type set p_type=NULL where p_no=1;
+
+ERROR:
+ Updation of Pet Type Denied.
+CONTEXT:  PL/pgSQL function f1() line 23 at RAISE
+----------------------------------------------------------------------------------
+postgres=# update pet_type set p_no=NULL where p_no=1;
+ERROR:
+ Updation of Pet no Denied.
+CONTEXT:  PL/pgSQL function f1() line 19 at RAISE
+----------------------------------------------------------------------------------

@@ -1,0 +1,54 @@
+d2] Trigger for german_shephard table before insertion.
+
+create trigger td2
+before insert
+on german_shephard
+for each row 
+execute procedure d2();
+
+create or replace function d2() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.p_no=0 or new.p_no ISNULL or new.d_no=0 or new.d_no ISNULL)then
+           raise exception E''\n Enter Valid Reference No.'';
+        end if;  
+
+        perform *
+        from dogs
+        where d_no=new.d_no
+	and d_no=102;
+	if not found then
+	   raise exception E''\n Invalid Dog Reference No.!'';
+        end if;
+
+	perform *
+        from pet_type
+        where p_no=new.p_no
+	and p_no=2;
+	if not found then
+	   raise exception E''\n Invalid Pet Reference No.!'';
+        end if;
+    end if;
+return new;
+end;
+'language'plpgsql';
+-----------------------------------------------------------------------------------------
+Insertion:
+==========
+postgres=# insert into german_shephard values(0,0,'male','black','3 months');
+
+ERROR:
+ Enter Valid Reference No.
+CONTEXT:  PL/pgSQL function d2() line 5 at RAISE
+-----------------------------------------------------------------------------------------
+postgres=# insert into german_shephard values(2,101,'male','black','3 months');
+
+ERROR:
+ Invalid Dog Reference No.!
+CONTEXT:  PL/pgSQL function d2() line 13 at RAISE
+------------------------------------------------------------------------------------------
+postgres=# insert into german_shephard values(1,102,'male','black','3 months');
+ERROR:
+ Invalid Pet Reference No.!
+CONTEXT:  PL/pgSQL function d2() line 21 at RAISE
+-----------------------------------------------------------------------------------------

@@ -1,0 +1,260 @@
+Insertions:
+===========
+1] pet_type:
+
+postgres=# select * from pet_type;
+
+ p_no | p_type
+------+--------
+    1 | dogs
+    2 | dogs
+    3 | dogs
+    4 | dogs
+    5 | dogs
+    6 | dogs
+    7 | dogs
+    8 | dogs
+    9 | dogs
+   10 | dogs
+   11 | cats
+   12 | cats
+   13 | cats
+   14 | cats
+   15 | cats
+   16 | cats
+   17 | cats
+   18 | cats
+   19 | cats
+   20 | cats
+(20 rows)
+=================================================================================
+2] dogs:
+
+postgres=# select * from dogs;
+
+ p_no | d_no |       d_breed
+------+------+---------------------
+    1 |  101 | labrador retrievers
+    2 |  102 | german shephard
+    3 |  103 | golden retrievers
+    4 |  104 | french bulldog
+    5 |  105 | bulldog
+    6 |  106 | poodles
+    7 |  107 | beagles
+    8 |  108 | rottweilers
+    9 |  109 | german shorthaired
+   10 |  110 | welsh corgis
+(10 rows)
+
+postgres=# select * from labrador;
+
+ p_no | d_no | d_gender | d_colour |  d_age
+------+------+----------+----------+----------
+    1 |  101 | male     | black    | 3 months
+    1 |  101 | female   | brown    | 2 years
+    1 |  101 | female   | yellow   | 1 year
+    1 |  101 | male     | black    | 1 month
+(4 rows)
+
+postgres=# select * from german_shephard;
+
+ p_no | d_no | d_gender |   d_colour    |  d_age
+------+------+----------+---------------+----------
+    2 |  102 | male     | black         | 8 month
+    2 |  102 | female   | sable         | 5 years
+    2 |  102 | female   | grey          | 5 months
+    2 |  102 | male     | red and black | 8 month
+(4 rows)
+
+
+postgres=# select * from golden_retrievers;
+
+ p_no | d_no | d_gender | d_colour |  d_age
+------+------+----------+----------+----------
+    3 |  103 | male     | cream    | 4 months
+    3 |  103 | female   | golden   | 4 years
+    3 |  103 | female   | golden   | 2 years
+    3 |  103 | male     | golden   | 1 month
+(4 rows)
+
+postgres=# select * from french_bulldog;
+
+ p_no | d_no | d_gender |    d_colour     |  d_age
+------+------+----------+-----------------+----------
+    4 |  104 | female   | white           | 1 year
+    4 |  104 | female   | brindle         | 2 years
+    4 |  104 | male     | brindle & white | 7 months
+(3 rows)
+
+postgres=# select * from bulldog;
+
+ p_no | d_no | d_gender |   d_colour   |  d_age
+------+------+----------+--------------+----------
+    5 |  105 | male     | fawn & white | 7 months
+    5 |  105 | female   | white        | 6 months
+    5 |  105 | female   | piebalde     | 4 years
+    5 |  105 | male     | red brindle  | 4 months
+    5 |  105 | male     | fawn         | 2 months
+    5 |  105 | female   | white        | 2 months
+(6 rows)
+
+postgres=# select * from poodles;
+
+ p_no | d_no | d_gender |   d_colour    |  d_age
+------+------+----------+---------------+----------
+    6 |  106 | female   | white         | 2 months
+    6 |  106 | female   | black         | 9 months
+    6 |  106 | male     | brown         | 6 months
+    6 |  106 | male     | black & white | 3 years
+    6 |  106 | male     | cream         | 1 year
+(5 rows)
+
+postgres=# select * from beagles;
+
+ p_no | d_no | d_gender |     d_colour      |  d_age
+------+------+----------+-------------------+----------
+    7 |  107 | male     | lemon & white     | 6 years
+    7 |  107 | male     | tricolour         | 6 months
+    7 |  107 | female   | white & chocolate | 3 years
+(3 rows)
+
+postgres=# select * from rottweilers;
+
+ p_no | d_no | d_gender | d_colour |  d_age
+------+------+----------+----------+----------
+    8 |  108 | female   | black    | 3 years
+    8 |  108 | male     | tan      | 5 years
+    8 |  108 | male     | mahogany | 5 months
+    8 |  108 | male     | black    | 5 months
+(4 rows)
+
+postgres=# select * from german_shorthaired;
+
+ p_no | d_no | d_gender |   d_colour    |  d_age
+------+------+----------+---------------+----------
+    9 |  109 | male     | liver & white | 5 months
+    9 |  109 | female   | liver         | 2 months
+    9 |  109 | male     | black & white | 4 years
+    9 |  109 | female   | brown         | 1 year
+(4 rows)
+
+postgres=# select * from welsh_corgis;
+
+ p_no | d_no | d_gender |  d_colour   |  d_age
+------+------+----------+-------------+----------
+   10 |  110 | female   | sable       | 1 year
+   10 |  110 | male     | fawn        | 1 month
+   10 |  110 | male     | red         | 4 months
+   10 |  110 | female   | tricoloured | 4 years
+(4 rows)
+===============================================================================
+3] cats:
+
+postgres=# select * from cats;
+
+ p_no | c_no |      c_breed
+------+------+--------------------
+   11 |  201 | devon rex
+   12 |  202 | abyssinian
+   13 |  203 | sphynx
+   14 |  204 | scottish fold
+   15 |  205 | american shorthair
+   16 |  206 | maine coon
+   17 |  207 | persian
+   18 |  208 | british shorthair
+   19 |  209 | ragdoll
+   20 |  210 | exotic shorthair
+(10 rows)
+
+postgres=# select * from devon_rex;
+
+ p_no | c_no | c_gender | c_colour |   c_age
+------+------+----------+----------+-----------
+   11 |  201 | male     | grey     | 10 months
+   11 |  201 | male     | white    | 11 months
+   11 |  201 | female   | black    | 3 years
+   11 |  201 | female   | black    | 1 year
+(4 rows)
+
+postgres=# select * from abyssinian;
+
+ p_no | c_no | c_gender | c_colour |  c_age
+------+------+----------+----------+----------
+   12 |  202 | female   | ruddy    | 1 year
+   12 |  202 | male     | fawn     | 4 years
+   12 |  202 | male     | sorreal  | 4 months
+   12 |  202 | male     | silvar   | 4 months
+(4 rows)
+
+postgres=# select * from sphynx;
+
+ p_no | c_no | c_gender | c_colour |   c_age
+------+------+----------+----------+-----------
+   13 |  203 | female   | white    | 1 months
+   13 |  203 | female   | black    | 11 months
+   13 |  203 | male     | brown    | 11 months
+(3 rows)
+
+postgres=# select * from scottish_fold;
+
+ p_no | c_no | c_gender | c_colour |   c_age
+------+------+----------+----------+-----------
+   14 |  204 | male     | white    | 11 months
+   14 |  204 | male     | black    | 7 months
+   14 |  204 | female   | black    | 2 years
+   14 |  204 | female   | cream    | 3 years
+   14 |  204 | female   | cream    | 1 year
+(5 rows)
+
+postgres=# select * from american_shorthair;
+
+ p_no | c_no | c_gender | c_colour |  c_age
+------+------+----------+----------+----------
+   15 |  205 | female   | brown    | 3 years
+   15 |  205 | male     | black    | 3 years
+   15 |  205 | male     | cream    | 4 months
+   15 |  205 | female   | white    | 4 months
+(4 rows)
+
+postgres=# select * from maine_coon;
+
+ p_no | c_no | c_gender |   c_colour    |  c_age
+------+------+----------+---------------+----------
+   16 |  206 | female   | black         | 4 months
+   16 |  206 | male     | black & white | 4 years
+   16 |  206 | male     | blue & gray   | 1 year
+   16 |  206 | female   | cream         | 1 year
+   16 |  206 | female   | cream         | 1 month
+(5 rows)
+
+postgres=# select * from persian;
+
+ p_no | c_no | c_gender | c_colour |   c_age
+------+------+----------+----------+-----------
+   17 |  207 | female   | cream    | 1 month
+   17 |  207 | male     | black    | 5 months
+   17 |  207 | female   | blue     | 7 months
+   17 |  207 | female   | cameo    | 11 months
+   17 |  207 | male     | cameo    | 3 months
+(5 rows)
+
+postgres=# select * from british_shorthair;
+
+ p_no | c_no | c_gender | c_colour  |  c_age
+------+------+----------+-----------+----------
+   18 |  208 | male     | white     | 3 months
+   18 |  208 | male     | black     | 3 years
+   18 |  208 | female   | ebony red | 2 years
+   18 |  208 | female   | gray      | 5 years
+   18 |  208 | female   | cream     | 1 months
+(5 rows)
+
+postgres=# select * from exotic_shorthair;
+
+ p_no | c_no | c_gender | c_colour |  c_age
+------+------+----------+----------+----------
+   20 |  210 | female   | silver   | 1 months
+   20 |  210 | female   | fawn     | 9 months
+   20 |  210 | male     | blue     | 3 years
+   20 |  210 | male     | brown    | 4 years
+(4 rows)

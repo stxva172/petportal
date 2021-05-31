@@ -1,0 +1,59 @@
+c1] Trigger for devon_rex table before insertion.
+
+create trigger tc1
+before insert
+on devon_rex
+for each row 
+execute procedure c1();
+
+CREATE TRIGGER
+
+create or replace function c1() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.p_no=0 or new.p_no ISNULL or new.c_no=0 or new.c_no ISNULL)then
+           raise exception E''\n Enter Valid Reference No.'';
+        end if;  
+
+        perform *
+        from cats
+        where c_no=new.c_no
+	and c_no=201;
+	if not found then
+	   raise exception E''\n Invalid Cat Reference No.!'';
+        end if;
+
+	perform *
+        from pet_type
+        where p_no=new.p_no
+	and p_no=11;
+	if not found then
+	   raise exception E''\n Invalid Pet Reference No.!'';
+        end if;
+    end if;
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+-----------------------------------------------------------------------------------------
+Insertion:
+==========
+postgres=# insert into devon_rex values(0,0,'male','black','3 months');
+
+ERROR:
+ Enter Valid Reference No.
+CONTEXT:  PL/pgSQL function c1() line 5 at RAISE
+-----------------------------------------------------------------------------------------
+postgres=# insert into devon_rex values(1,201,'male','black','3 months');
+
+ERROR:
+ Invalid Pet Reference No.!
+CONTEXT:  PL/pgSQL function c1() line 21 at RAISE
+-----------------------------------------------------------------------------------------
+postgres=# insert into devon_rex values(11,20,'male','black','3 months');
+
+ERROR:
+ Invalid Cat Reference No.!
+CONTEXT:  PL/pgSQL function c1() line 13 at RAISE
+-----------------------------------------------------------------------------------------

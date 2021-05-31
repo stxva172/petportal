@@ -1,0 +1,53 @@
+5]Trigger to define constraints before insert or update on adopter table.
+
+create trigger t5
+before insert or update
+on adopter
+for each row 
+execute procedure f5();
+
+CREATE TRIGGER
+
+create or replace function f5() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.ad_no=0 or new.ad_no ISNULL or new.p_no=0 or new.p_no ISNULL)then
+            raise exception E''\n Adopter details unavailable..!!'';
+        end if; 
+  
+	perform *
+	from adopter
+        where ad_no=new.ad_no
+        and p_no=new.p_no;
+
+        if found then
+	   raise exception E''\n Invalid Data..!'';
+        end if;
+
+        perform *
+        from pet_type
+        where p_no=new.p_no;
+
+	if not found then
+	   raise exception E''\n Invalid pet Reference No..!'';
+        end if;
+
+	perform *
+        from adopter
+        where ad_no=new.ad_no;
+	
+	if not found then
+	   raise exception E''\n Invalid Adopter No..!'';
+        end if;
+
+     end if;
+
+     if (TG_OP=''UPDATE'') then
+        raise exception E''\n Update access to Adopter denied'';
+     end if;
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+

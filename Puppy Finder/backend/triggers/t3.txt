@@ -1,0 +1,87 @@
+3)Trigger to define constraints before insert on cats table.
+Ans.:
+
+create trigger t3
+before insert
+on cats
+for each row 
+execute procedure f3();
+
+CREATE TRIGGER
+
+create or replace function f3() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.c_no=0 or new.c_no ISNULL or new.p_no=0 or new.p_no ISNULL)then
+           raise exception E''\n Enter valid reference no.!'';
+        end if;   
+	perform *
+        from cats   
+         where c_no=new.c_no
+        and p_no=new.p_no;
+        if found then
+	   raise exception E''\n Invalid Cat Information..!'';
+        end if;
+
+        perform *
+        from cats
+        where c_no=new.c_no;
+	if not found then
+	   raise exception E''\n Invalid Cat reference no..!'';
+        end if;
+
+	perform *
+        from pet_type
+        where p_no=new.p_no;
+	if not found then
+	   raise exception E''\n Invalid Pet reference no..!'';
+        end if;
+	
+	perform *
+        from cats
+        where c_breed=new.c_breed;
+	if not found then
+	   raise exception E''\n This breed already exists!'';
+        end if;
+
+     end if;
+
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+-------------------------------------------------------------------------------------------------
+Insertion:
+==========
+
+postgres=# insert into cats values(0,0,'devon_rex');
+
+ERROR:
+ Enter valid reference no.!
+CONTEXT:  PL/pgSQL function f3() line 5 at RAISE
+-------------------------------------------------------------------------------------------------
+postgres=# insert into cats values(1,1,'devon_rex');
+
+ERROR:
+ Invalid Cat reference no..!
+CONTEXT:  PL/pgSQL function f3() line 19 at RAISE
+-------------------------------------------------------------------------------------------------
+postgres=# insert into cats values(1,101,'devon_rex');
+
+ERROR:
+ Invalid Cat reference no..!
+CONTEXT:  PL/pgSQL function f3() line 19 at RAISE
+-------------------------------------------------------------------------------------------------
+postgres=# insert into cats values(11,201,'devon_rex');
+
+ERROR:
+ Invalid Cat Information..!
+CONTEXT:  PL/pgSQL function f3() line 12 at RAISE
+-------------------------------------------------------------------------------------------------
+postgres=# insert into cats values(10,210,'devon_rex');
+
+ERROR:
+ This breed already exists!
+CONTEXT:  PL/pgSQL function f3() line 33 at RAISE
+-------------------------------------------------------------------------------------------------

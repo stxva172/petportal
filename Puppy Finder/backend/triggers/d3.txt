@@ -1,0 +1,58 @@
+d3] Trigger for golden_retrievers table before insertion.
+
+create trigger td3
+before insert
+on golden_retrievers
+for each row 
+execute procedure d3();
+
+CREATE TRIGGER
+
+create or replace function d3() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.p_no=0 or new.p_no ISNULL or new.d_no=0 or new.d_no ISNULL)then
+           raise exception E''\n Enter Valid Reference No.'';
+        end if;  
+
+        perform *
+        from dogs
+        where d_no=new.d_no
+	and d_no=103;
+	if not found then
+	   raise exception E''\n Invalid Dog Reference No.!'';
+        end if;
+
+	perform *
+        from pet_type
+        where p_no=new.p_no
+	and p_no=3;
+	if not found then
+	   raise exception E''\n Invalid Pet Reference No.!'';
+        end if;
+    end if;
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+-----------------------------------------------------------------------------------------
+Insertion:
+==========
+postgres=# insert into golden_retrievers values(0,0,'male','black','3 months');
+
+ERROR:
+ Enter Valid Reference No.
+CONTEXT:  PL/pgSQL function d3() line 5 at RAISE
+-------------------------------------------------------------------------------------------
+postgres=# insert into golden_retrievers values(3,101,'male','black','3 months');
+
+ERROR:
+ Invalid Dog Reference No.!
+CONTEXT:  PL/pgSQL function d3() line 13 at RAISE
+--------------------------------------------------------------------------------------------
+postgres=# insert into golden_retrievers values(2,103,'male','black','3 months');
+ERROR:
+ Invalid Pet Reference No.!
+CONTEXT:  PL/pgSQL function d3() line 21 at RAISE
+-----------------------------------------------------------------------------------------

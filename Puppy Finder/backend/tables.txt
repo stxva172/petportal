@@ -1,0 +1,255 @@
+Tables:
+======= 
+1] pet_type:
+
+postgres=# create table pet_type(p_no int primary key check(p_no>0),p_type varchar(20) NOT NULL);
+CREATE TABLE
+
+postgres=# select * from pet_type;
+
+ p_no | p_type
+------+--------
+(0 rows)
+============================================================================================================================================================================================================
+2] dogs:
+
+postgres=# create table dogs(p_no int,d_no int primary key check(d_no>0),d_breed varchar(20) NOT NULL);
+CREATE TABLE
+
+postgres=# select * from dogs;
+
+ p_no | d_no | d_breed
+------+------+---------
+(0 rows)
+
+postgres=# create table labrador(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from labrador;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table german_shephard(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from german_shephard;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table golden_retrievers(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from golden_retrievers;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table french_bulldog(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from french_bulldog;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+postgres=# create table poodles(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from poodles;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table beagles(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from beagles;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table rottweilers(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from rottweilers;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table german_shorthaired(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from german_shorthaired;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=# create table welsh_corgis(p_no int NOT NULL,d_no int NOT NULL,d_gender varchar(20) NOT NULL check(d_gender in('male','female')),d_colour varchar(20) NOT NULL,d_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from welsh_corgis;
+
+ p_no | d_no | d_gender | d_colour | d_age
+------+------+----------+----------+-------
+(0 rows)
+============================================================================================================================================================================================================
+3] cats:
+
+postgres=# create table cats(p_no int,c_no int primary key check(c_no>0),c_breed varchar(20) NOT NULL);
+CREATE TABLE
+
+postgres=# select * from cats;
+
+ p_no | c_no | c_breed
+------+------+---------
+(0 rows)
+
+postgres=#  create table devon_rex(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from devon_rex;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table abyssinian(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from abyssinian;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table sphynx(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from sphynx;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table scottish_fold(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from scottish_fold;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table american_shorthair(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from american_shorthair;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table maine_coon(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from maine_coon;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table persian(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from persian;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table british_shorthair(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from british_shorthair;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table ragdoll(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from ragdoll;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+
+
+postgres=#  create table exotic_shorthair(p_no int NOT NULL,c_no int NOT NULL,c_gender varchar(20) NOT NULL check(c_gender in('male','female')),c_colour varchar(20) NOT NULL,c_age text NOT NULL);
+CREATE TABLE
+
+postgres=# select * from exotic_shorthair;
+
+ p_no | c_no | c_gender | c_colour | c_age
+------+------+----------+----------+-------
+(0 rows)
+============================================================================================================================================================================================================
+4] seller:
+
+postgres=# create table seller(se_no int primary key check(se_no>0),se_nm varchar(20) NOT NULL,se_ph text NOT NULL unique,se_mail text NOT NULL unique,se_addr text NOT NULL,p_no int NOT NULL);
+CREATE TABLE
+
+postgres=# select * from seller;
+
+ se_no | se_nm | se_ph | se_mail | se_addr | p_no
+-------+-------+-------+---------+---------+------
+(0 rows)
+============================================================================================================================================================================================================
+5] adopter:
+
+postgres=# create table adopter(ad_no int primary key check(ad_no>0),ad_nm varchar(20) NOT NULL,ad_ph text NOT NULL unique,ad_mail text NOT NULL unique,ad_addr text NOT NULL,p_no int NOT NULL);
+CREATE TABLE
+
+postgres=# select * from adopter;
+
+ ad_no | ad_nm | ad_ph | ad_mail | ad_addr | p_no
+-------+-------+-------+---------+---------+------
+(0 rows)
+============================================================================================================================================================================================================
+6] order:
+
+postgres=# create table orders(o_no int primary key check(o_no>0),p_no int,se_no int,ad_no int,o_date date check(o_date<=current_date),rate int check(rate >0),qty int NOT NULL check(qty>0),total int check(total>0));
+CREATE TABLE
+
+postgres=# select * from orders;
+
+ o_no | p_no | se_no | ad_no | o_date | rate | qty | total
+------+------+-------+-------+--------+------+-----+-------
+(0 rows)
+============================================================================================================================================================================================================

@@ -1,0 +1,119 @@
+Description:
+
+1] pet_type:
+
+postgres=# \d pet_type;
+
+                     Table "public.pet_type"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ p_no    | integer               |           | not null |
+ p_type  | character varying(20) |           | not null |
+ p_breed | character varying(20) |           |          |
+Indexes:
+    "pet_type_pkey" PRIMARY KEY, btree (p_no)
+Check constraints:
+    "pet_type_p_no_check" CHECK (p_no > 0)
+Triggers:
+    t1 BEFORE INSERT OR UPDATE ON pet_type FOR EACH ROW EXECUTE FUNCTION f1()
+
+2] dogs:
+
+postgres=# \d dogs;
+
+                          Table "public.dogs"
+    Column    |         Type          | Collation | Nullable | Default
+--------------+-----------------------+-----------+----------+---------
+ d_no         | integer               |           | not null |
+ d_breed      | character varying(20) |           | not null |
+ d_gender     | character varying(10) |           | not null |
+ d_colour     | character varying(20) |           | not null |
+ d_age        | text                  |           | not null |
+ d_price      | integer               |           |          |
+ p_no         | integer               |           | not null |
+ availability | integer               |           |          |
+Indexes:
+    "dogs_pkey" PRIMARY KEY, btree (d_no)
+Check constraints:
+    "dogs_d_gender_check" CHECK (d_gender::text = ANY (ARRAY['male'::character varying, 'female'::character varying]::text[]))
+    "dogs_d_no_check" CHECK (d_no > 0)
+    "dogs_d_price_check" CHECK (d_price > 0)
+
+3] cats:
+
+postgres=# \d cats;
+
+                          Table "public.cats"
+    Column    |         Type          | Collation | Nullable | Default
+--------------+-----------------------+-----------+----------+---------
+ c_no         | integer               |           | not null |
+ c_breed      | character varying(20) |           | not null |
+ c_gender     | character varying(10) |           | not null |
+ c_colour     | character varying(20) |           | not null |
+ c_age        | text                  |           | not null |
+ c_price      | integer               |           |          |
+ p_no         | integer               |           | not null |
+ availability | integer               |           |          |
+Indexes:
+    "cats_pkey" PRIMARY KEY, btree (c_no)
+Check constraints:
+    "cats_c_gender_check" CHECK (c_gender::text = ANY (ARRAY['male'::character varying, 'female'::character varying]::text[]))
+    "cats_c_no_check" CHECK (c_no > 0)
+    "cats_c_price_check" CHECK (c_price > 0)
+
+
+4] seller:
+
+postgres=# \d seller;
+
+                      Table "public.seller"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ se_no   | integer               |           | not null |
+ se_nm   | character varying(20) |           | not null |
+ se_ph   | text                  |           | not null |
+ se_mail | text                  |           | not null |
+ se_addr | text                  |           | not null |
+ p_no    | integer               |           | not null |
+Indexes:
+    "seller_pkey" PRIMARY KEY, btree (se_no)
+    "seller_se_mail_key" UNIQUE CONSTRAINT, btree (se_mail)
+    "seller_se_ph_key" UNIQUE CONSTRAINT, btree (se_ph)
+Check constraints:
+    "seller_se_no_check" CHECK (se_no > 0)
+
+5] adopter:
+
+postgres=# \d adopter;
+
+                      Table "public.adopter"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ ad_no   | integer               |           | not null |
+ ad_nm   | character varying(20) |           | not null |
+ ad_ph   | text                  |           | not null |
+ ad_mail | text                  |           | not null |
+ ad_addr | text                  |           | not null |
+ p_no    | integer               |           | not null |
+Indexes:
+    "adopter_pkey" PRIMARY KEY, btree (ad_no)
+    "adopter_ad_mail_key" UNIQUE CONSTRAINT, btree (ad_mail)
+    "adopter_ad_ph_key" UNIQUE CONSTRAINT, btree (ad_ph)
+Check constraints:
+    "adopter_ad_no_check" CHECK (ad_no > 0)
+
+6] order:
+
+postgres=# \d orders;
+
+               Table "public.orders"
+ Column |  Type   | Collation | Nullable | Default
+--------+---------+-----------+----------+---------
+ o_no   | integer |           | not null |
+ p_no   | integer |           | not null |
+ se_no  | integer |           | not null |
+ ad_no  | integer |           | not null |
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (o_no)
+Check constraints:
+    "orders_o_no_check" CHECK (o_no > 0)

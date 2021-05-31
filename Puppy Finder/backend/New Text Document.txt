@@ -1,0 +1,53 @@
+6] Trigger on orders table before insert or update.
+
+create trigger t6
+before insert or update
+on orders
+for each row 
+execute procedure f6();
+
+create or replace function f6() returns trigger as'
+declare
+	stk int;
+begin
+     if(new.p_no<=0 or new.p_no ISNULL or new.se_no<=0 or new.se_no ISNULL or new.ad_no<=0 or new.ad_no ISNULL or new.o_no<=0 or new.o_no ISNULL)then
+        raise exception E''\n Order not found..!!'';
+     end if;  
+    
+     perform *
+     from orders
+     where p_no=new.p_no
+       	and se_no=new.se_no
+      	and ad_no=new.ad_no
+	and o_no=new.o_no;
+        if found then
+	   raise exception E''\n Invalid Order..!'';
+        end if;
+
+     if(new.cid=1) then
+	if(stk<new.availability) then
+	   raise exception E''\n Out of Stock. Order aborted.\n '';
+	end if;
+     end if;
+
+     if(new.cid=2) then
+	if(stk<new.availibility) then
+	   raise exception E''\n Out of Stock. Order aborted.\n '',stk;
+	end if;
+     end if;
+
+      if(new.p_no=1) then
+	 new.d_price:=(select d_price 
+			from dogs
+			where d_no=new.d_no
+			and p_no=new.p_no);
+       end if;
+       if(new.p_no=2) then
+	  new.price:=(select c_price 
+			from cats
+			where c_no=new.c_no
+			and p_no=new.p_no);
+        end if;
+	return new;
+end;
+'language'plpgsql';

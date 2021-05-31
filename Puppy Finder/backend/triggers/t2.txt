@@ -1,0 +1,87 @@
+2)Trigger to define constrints before insert on dogs table.
+Ans.:
+
+create trigger t2
+before insert
+on dogs
+for each row 
+execute procedure f2();
+
+CREATE TRIGGER
+
+create or replace function f2() returns trigger as'
+begin
+     if (TG_OP=''INSERT'')then
+        if (new.d_no=0 or new.d_no ISNULL or new.p_no=0 or new.p_no ISNULL)then
+           raise exception E''\n Enter valid reference no.!'';
+        end if;   
+	perform *
+        from dogs   
+         where d_no=new.d_no
+        and p_no=new.p_no;
+        if found then
+	   raise exception E''\n Invalid Dog Information..!'';
+        end if;
+
+	perform *
+        from pet_type
+        where p_no=new.p_no;
+	if not found then
+	   raise exception E''\n Invalid Pet reference no..!'';
+        end if;
+
+	perform *
+        from dogs
+        where d_no=new.d_no;
+	if not found then
+	   raise exception E''\n Invalid Dog reference no..!'';
+        end if;
+
+	perform *
+        from dogs
+        where d_breed=new.d_breed;
+	if not found then
+	   raise exception E''\n This breed already exists!'';
+        end if;
+
+     end if;
+
+return new;
+end;
+'language'plpgsql';
+
+CREATE FUNCTION
+----------------------------------------------------------------------------------------------------------
+Insertion:
+==========
+
+postgres=# insert into dogs values(0,0,'afghan hound');
+
+ERROR:
+ Enter valid reference no.!
+CONTEXT:  PL/pgSQL function f2() line 5 at RAISE
+----------------------------------------------------------------------------------------------------------
+postgres=# insert into dogs values(1,101,'afghan hound');
+
+ERROR:
+ Invalid Dog Information..!
+CONTEXT:  PL/pgSQL function f2() line 12 at RAISE
+----------------------------------------------------------------------------------------------------------
+postgres=# insert into dogs values(21,101,'afghan hound');
+
+ERROR:
+ Invalid Pet reference no..!
+CONTEXT:  PL/pgSQL function f2() line 19 at RAISE
+----------------------------------------------------------------------------------------------------------
+postgres=# insert into dogs values(20,111,'afghan hound');
+
+ERROR:
+ Invalid Dog reference no..!
+CONTEXT:  PL/pgSQL function f2() line 26 at RAISE
+----------------------------------------------------------------------------------------------------------
+postgres=# insert into dogs values(20,110,'afghan hound');
+
+ERROR:
+ This breed already exists!
+CONTEXT:  PL/pgSQL function f2() line 33 at RAISE
+----------------------------------------------------------------------------------------------------------
